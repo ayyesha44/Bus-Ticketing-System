@@ -1,5 +1,3 @@
-from crypt import methods
-
 from app import app
 from app.forms import Loginform
 from flask import render_template
