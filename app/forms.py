@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
-from wtforms.validators import DataRequired, EqualTo
+from wtforms.validators import DataRequired, EqualTo, Email
 
 
 class Loginform(FlaskForm):
@@ -10,7 +10,7 @@ class Loginform(FlaskForm):
     submit = SubmitField('Log in')
 
 class Signupform(FlaskForm):
-    email = StringField('Email address', validators=[DataRequired()])
+    email = StringField('Email address', validators=[DataRequired(), Email()])
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     retypepass = PasswordField('Retype password', validators=[DataRequired(), EqualTo('password')])
