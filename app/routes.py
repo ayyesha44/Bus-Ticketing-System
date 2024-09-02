@@ -21,5 +21,6 @@ def signup():
             new_user = User(email=form.email.data, username=form.username.data, password=form.password.data)
             db.session.add(new_user)
             db.session.commit()
+            flash(f'Registration successful for user {new_user.username}')
             return redirect('/login')
     return render_template('signup.html', form=form)
