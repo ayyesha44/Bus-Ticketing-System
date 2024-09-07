@@ -10,7 +10,7 @@ from app.models import User
 @app.route('/index')
 @login_required
 def index():
-    return render_template('index.html')
+    return render_template('index.html', title="Home")
 
 @app.route('/logout')
 def logout():
@@ -29,7 +29,7 @@ def login():
             return redirect('/login')
         login_user(user, remember=form.rememberme.data)
         return redirect('/index')
-    return render_template('login.html', form=form)
+    return render_template('login.html', form=form, title="Login")
 
 @app.route('/signup', methods=["GET", "POST"])
 def signup():
@@ -42,4 +42,4 @@ def signup():
             db.session.commit()
             flash(f'Registration successful for user {new_user.username}')
             return redirect('/login')
-    return render_template('signup.html', form=form)
+    return render_template('signup.html', form=form, title="Sign Up")
