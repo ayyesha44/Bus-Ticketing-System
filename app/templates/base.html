@@ -7,6 +7,7 @@
 </head>
 <body>
 
+<!--Navbar taken from https://getbootstrap.com/docs/5.3/components/navbar/#nav -->
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
     <a class="navbar-brand" href="/index">Train2Train</a>
@@ -20,6 +21,9 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/admin">Admin</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/faq">FAQ</a>
         </li>
         <li class="nav-item">
             {% if current_user.is_anonymous %}
