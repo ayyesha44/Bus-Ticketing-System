@@ -3,7 +3,7 @@ from app.models import User
 from app import app, db
 from app.forms import Loginform, Signupform
 from flask import render_template, redirect, flash
-from flask_login import current_user, login_user, login_required
+from flask_login import current_user, login_user, login_required, logout_user
 from app.models import User
 
 @app.route('/')
@@ -11,6 +11,11 @@ from app.models import User
 @login_required
 def index():
     return render_template('index.html')
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect('/index')
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
