@@ -11,10 +11,10 @@
     background-size: cover;
 }
 .navbar{
-    width: 90%;
-    padding: 35px 0;
+    width: 10%;
+    padding: 65px 50;
     margin: auto;
-    display: flex;
+    display:flex;
     align-items: center;
     justify-content: space-between;
 }
@@ -26,7 +26,6 @@
     top: 45%;
     transform: translateY(-50%);
     text-align: center;
-
 }
 button{
     width: 200px;
@@ -39,11 +38,6 @@ button{
     font-size: 20px;
     cursor: pointer;
     font-weight: 600;
-}
-.navbar ul li{
-    list-style: none;
-    display: inline-block;
-    margin: 0 20px;
 }
 button:hover{
     background: rgb(0, 192, 226);
