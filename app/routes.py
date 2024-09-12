@@ -43,3 +43,7 @@ def signup():
             flash(f'Registration successful for user {new_user.username}')
             return redirect('/login')
     return render_template('signup.html', form=form, title="Sign Up")
+
+@app.route('/seats')
+def select_seat():
+    return render_template("select_seat.html")
