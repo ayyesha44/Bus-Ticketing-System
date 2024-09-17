@@ -1,5 +1,25 @@
 {% extends "base.html" %}
 
 {% block body %}
-<p>Hello {{current_user.username}}</p>
+<h2 class="mb-5">  Hello {{current_user.username}}</h2>
+<div class="card w-100" style="width: 18rem;">
+    <a href="/seats" class="text-decoration-none text-black">
+  <div class="card-body">
+    <h5 class="card-title">1A45 KL &rarr; JHR </h5>
+    <h6 class="card-subtitle mb-2 text-body-secondary">RM 30</h6>
+    <p class="card-text">
+        <p><strong>Route:</strong> Kuala Lumpur to Johor Bahru</p>
+        <p><strong>Train Number:</strong> 102 Express</p>
+        <p><strong>Departure:</strong> Kuala Lumpur Sentral, 09:00 AM</p>
+        <p><strong>Arrival:</strong> Johor Bahru Sentral, 01:45 PM</p>
+        <p><strong>Duration:</strong> 4 hours 45 minutes</p>
+        <p><strong>Description:</strong> Enjoy a comfortable and efficient journey from Kuala Lumpur to Johor Bahru
+            aboard the 102 Express. This modern train offers spacious seating and scenic views of Malaysia's countryside.
+            Your journey begins at Kuala Lumpur Sentral and arrives at Johor Bahru Sentral, providing a smooth and
+            convenient connection between the two cities.
+        </p>
+    </p>
+  </div>
+    </a>
+</div>
 {% endblock %}

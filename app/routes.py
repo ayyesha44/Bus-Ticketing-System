@@ -12,6 +12,10 @@ from app.models import User
 def index():
     return render_template('index.html', title="Home")
 
+@app.route('/faq')
+def faq():
+    return render_template('faq.html', title="Frequently Asked Questions")
+
 @app.route('/logout')
 def logout():
     logout_user()
