@@ -1,7 +1,18 @@
 {% extends "base.html" %}
 
 {% block body %}
-<h2 class="mb-5">  Hello {{current_user.username}}</h2>
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="liveToast" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="../static/2087.jpg" class="rounded me-2 w-25">
+      <strong class="me-auto">Train2Train</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      Hello {{current_user.username}}!
+    </div>
+  </div>
+</div>
 <div class="card w-100" style="width: 18rem;">
     <a href="/seats" class="text-decoration-none text-black">
   <div class="card-body">

@@ -49,5 +49,11 @@ def signup():
     return render_template('signup.html', form=form, title="Sign Up")
 
 @app.route('/seats')
+@login_required
 def select_seat():
     return render_template("select_seat.html")
+
+@app.route('/profile')
+@login_required
+def profile():
+    return render_template("profile.html")
