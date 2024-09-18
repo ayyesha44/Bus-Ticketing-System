@@ -9,6 +9,11 @@ class User(UserMixin, app.db.Model):
     email: sqlalchemy.orm.Mapped[str] = sqlalchemy.orm.mapped_column(sqlalchemy.String(150), index=True, unique=True)
     password: sqlalchemy.orm.Mapped[str] = sqlalchemy.orm.mapped_column(sqlalchemy.String(300))
 
+class Seat(app.db.Model):
+    id: sqlalchemy.orm.Mapped[str] = sqlalchemy.orm.mapped_column(primary_key=True)
+    selected: sqlalchemy.orm.Mapped[str] = sqlalchemy.orm.mapped_column(sqlalchemy.Boolean, unique=False, default=True)
+
+
 @app.login.user_loader
 def load_user(id):
     return app.db.session.get(User, int(id))

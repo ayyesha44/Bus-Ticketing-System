@@ -143,6 +143,45 @@
       input {
         display: none;
       }
+      .price {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .amount1{
+        display: flex;
+        justify-content: space-between;
+      }
+      .amount{
+        margin-left: 5px;
+      }
+      .total {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        font-size: 16px;
+        font-weight: 500;
+      }
+      .total span {
+        font-size: 11px;
+        font-weight: 400;
+      }
+      .price button {
+        background: rgb(60, 60, 60);
+        color: white;
+        font-family: poppins;
+        font-size: 14px;
+        padding: 7px 14px;
+        border-radius: 2mm;
+        outline: none;
+        border: none;
+        cursor: pointer;
+        margin-top: 20px;
+      }
     </style>
   </head>
   <body>
@@ -166,6 +205,17 @@
               </div>
             </div>
           </div>
+          <div class="price">
+            <div class="total">
+              <span> <span class="count">0</span> Tickets </span>
+              <div class="amount1">
+                <div class="RM">RM</div>
+                <div class="amount">0</div>
+
+              </div>
+            </div>
+            <button type="button">Add to cart</button>
+          </div>
         </div>
       </div>
     </div>
@@ -185,6 +235,41 @@
             '"></label>'
         );
       }
+      // for (var i = 0; i < 35; i++) {
+      //   for (x in seated){
+      //     if (i = x - 2){
+      //       seats.insertAdjacentHTML(
+      //         "beforeend",
+      //         '<input type="checkbox" name="tickets" id="s' +
+      //           (i + 2) +
+      //           '" /><label for="s' +
+      //           (i + 2) +
+      //           '" class="seat ' +
+      //           booked +
+      //           '"></label>'
+      //       );
+      //     }
+      //   }
+      // }
+      let tickets = seats.querySelectorAll("input");
+      tickets.forEach((ticket) => {
+        ticket.addEventListener("change", () => {
+          let amount = document.querySelector(".amount").innerHTML;
+          let count = document.querySelector(".count").innerHTML;
+          amount = Number(amount);
+          count = Number(count);
+
+          if (ticket.checked) {
+            count += 1;
+            amount += 200;
+          } else {
+            count -= 1;
+            amount -= 200;
+          }
+          document.querySelector(".amount").innerHTML = amount;
+          document.querySelector(".count").innerHTML = count;
+        });
+      });
     </script>
   </body>
 </html>
