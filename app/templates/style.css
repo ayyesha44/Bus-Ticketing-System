@@ -35,6 +35,18 @@
 
 .content{
     width: 100%;
+    position: absolute;
+    color: white;
+    top: 45%;
+    transform: translateY(-50%);
+    text-align: center;
+}
+button{
+    width: 200px;
+    padding: 15px;
+    margin: 20px 5px;
+    text-align: center;
+    border-radius: 25px;
     color: black;
     border: 2px;
     font-size: 20px;
@@ -42,3 +54,6 @@
     font-weight: 600;
 }
 button:hover{
+    background: rgb(0, 192, 226);
+    transition: 0.5s;
+}
