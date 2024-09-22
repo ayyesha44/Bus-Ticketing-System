@@ -11,6 +11,7 @@
     background-size: cover;
     background-position: center;
 }
+/*
 .navbar{
     width: 10%;
     padding: 65px 50;
@@ -32,6 +33,7 @@
     color: #fff;
     text-transform: uppercase;
 }
+*/
 
 .content{
     width: 100%;
@@ -41,6 +43,7 @@
     transform: translateY(-50%);
     text-align: center;
 }
+/*
 button{
     width: 200px;
     padding: 15px;
@@ -57,3 +60,4 @@ button:hover{
     background: rgb(0, 192, 226);
     transition: 0.5s;
 }
+*/

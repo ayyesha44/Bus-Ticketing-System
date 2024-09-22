@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
-from wtforms.validators import DataRequired, EqualTo, Email
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
+from wtforms.validators import DataRequired, EqualTo, Email, Length
 
 
 class Loginform(FlaskForm):
@@ -15,3 +15,8 @@ class Signupform(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     retypepass = PasswordField('Retype password', validators=[DataRequired(), EqualTo('password')])
     signup = SubmitField('Sign up')
+
+class Editprofileform(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    email = StringField('Email address', validators=[DataRequired(), Email()])
+    submit = SubmitField('Submit')

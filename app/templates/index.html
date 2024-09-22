@@ -1,35 +1,49 @@
 {% extends "base.html" %}
 
 {% block body %}
- <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Train Ticket System</title>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <div class="banner">
-        <div class="navbar">
+<!-- <!DOCTYPE html>-->
+<!--<html>-->
+<!--    <head>-->
+<!--        <meta charset="UTF-8">-->
+<!--        <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--        <title>Train Ticket System</title>-->
+<!--        <link rel="stylesheet" href="style.css">-->
+<!--    </head>-->
+<!--    <body>-->
+<!--        <div class="banner">-->
+<!--        <div class="navbar">-->
+<!--        </div>-->
+<!--             <div class="navbar">-->
+<!--        <ul>-->
+<!--            <li><a href="#">FAQ</a></li>-->
+<!--            <li><a href="#">Login</a></li>-->
+<!--            <li><a href="#">Train Tracking</a>-->
+<!--        </ul>-->
+<!--pop up from https://getbootstrap.com/docs/5.3/components/toasts/-->
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+          <div id="liveToast" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+              <img src="../static/2087.jpg" class="rounded me-2 w-25">
+              <strong class="me-auto">Train2Train</strong>
+              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+              Hello {{current_user.username}}!
+            </div>
+          </div>
         </div>
-             <div class="navbar">
-        <ul>
-            <li><a href="#">FAQ</a></li>
-            <li><a href="#">Login</a></li>
-            <li><a href="#">Train Tracking</a>
-        </ul>
+        <div class="banner">
             <div class="content">
                 <h1>Welcome To Train2Train</h1>
-                <button type="button" id="booking-btn">Booking Now</button>
+                <button type="button" id="booking-btn" class="btn btn-outline-primary">Book Now</button>
             </div>
         </div>
         <script>
             document.getElementById("booking-btn").addEventListener("click", function() {
-                window.location.href = "booking.html";
+                window.location.href = "booking";
             });
         </script>
-    </body>
-</html>
+<!--    </body>-->
+<!--</html>-->
 
 {% endblock %}
