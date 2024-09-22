@@ -4,7 +4,8 @@ from app import app, db
 from app.forms import Loginform, Signupform, Editprofileform
 from flask import render_template, redirect, flash, request
 from flask_login import current_user, login_user, login_required, logout_user
-from app.models import User
+from app.models import User, Seat
+
 
 @app.route('/')
 @app.route('/index')
@@ -51,7 +52,16 @@ def signup():
 @app.route('/seats')
 @login_required
 def select_seat():
+    # result = session.query(Seat).filter(Seat.selected == 1)
+    # for row in result:
+    #     seated = seated + row.id 
+    # return render_template("select_seat.html", seated=seated)
     return render_template("select_seat.html")
+
+@app.route('/booking')
+@login_required
+def booking():
+    return render_template("booking.html")
 
 @app.route('/profile')
 @login_required
