@@ -136,7 +136,7 @@
         background: rgb(28, 185, 120);
         outline: none;
       }
-      .seat.booked {
+      .seat.booked{
         background: rgb(180, 180, 180);
         outline: none;
       }
@@ -182,6 +182,68 @@
         cursor: pointer;
         margin-top: 20px;
       }
+      .timings {
+        width:auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 30px;
+      }
+      .dates {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .dates-item {
+        width: 50px;
+        height: 40px;
+        background: rgb(233, 233, 233);
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding: 10px 0;
+        border-radius: 2mm;
+        cursor: pointer;
+      }
+      .day {
+        font-size: 12px;
+      }
+      .times {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 10px;
+      }
+      .time {
+        font-size: 14px;
+        width: fit-content;
+        padding: 7px 14px;
+        background: rgb(233, 233, 233);
+        border-radius: 2mm;
+        cursor: pointer;
+      }
+      .timings input:checked + label {
+        background: rgb(28, 185, 120);
+        color: white;
+      }
+      form {
+        position: absolute;
+        /* width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(
+          to right,
+          rgb(162, 163, 216),
+          rgb(108, 102, 194)
+        ); */
+      }
     </style>
   </head>
   <body>
@@ -199,11 +261,39 @@
             </div>
             <div class="train_img">
               <img src="../static/train.png" />
-              <div class="all-seats">
-                <input type="checkbox" name="tickets" id="s1" />
-                <label for="s1" class="seat booked"></label>
-              </div>
+              <form method="POST" action="/" id="form1">
+                <div class="all-seats">
+                  {%for seat in seat%}
+                    {% if seat.selected == True %}
+                      <input type="checkbox" name="tickets" id="{{seat.id}}" disabled/>
+                      <label for="{{seat.id}}" class="seat booked"></label>
+                    {%else%}
+                      <input type="checkbox" name="tickets" id="{{seat.id}}" />
+                      <label for="{{seat.id}}" class="seat"></label>
+                    {%endif%}
+                  {%endfor%}
+                </div>
+              </form>
             </div>
+          </div>
+          <div class="timings">
+            <div class="dates">
+              <input type="radio" name="date" id="d1" checked />
+              <label for="d1" class="dates-item">
+                <div class="day">Sun</div>
+                <div class="date">11</div>
+              </label>
+              <input type="radio" id="d2" name="date" />
+              <label class="dates-item" for="d2">
+                <div class="day">Mon</div>
+                <div class="date">12</div>
+              </label>
+              <input type="radio" id="d3" name="date" />
+              <label class="dates-item" for="d3">
+                <div class="day">Tue</div>
+                <div class="date">13</div>
+              </label>
+          </div>
           </div>
           <div class="price">
             <div class="total">
@@ -211,46 +301,15 @@
               <div class="amount1">
                 <div class="RM">RM</div>
                 <div class="amount">0</div>
-
               </div>
             </div>
-            <button type="button">Add to cart</button>
+            <button type="submit" form="form1" value="Submit">Add to cart</button>
           </div>
         </div>
       </div>
     </div>
     <script>
       let seats = document.querySelector(".all-seats");
-      for (var i = 0; i < 35; i++) {
-        let randint = Math.floor(Math.random() * 2);
-        let booked = randint === 1 ? "booked" : "";
-        seats.insertAdjacentHTML(
-          "beforeend",
-          '<input type="checkbox" name="tickets" id="s' +
-            (i + 2) +
-            '" /><label for="s' +
-            (i + 2) +
-            '" class="seat ' +
-            booked +
-            '"></label>'
-        );
-      }
-      // for (var i = 0; i < 35; i++) {
-      //   for (x in seated){
-      //     if (i = x - 2){
-      //       seats.insertAdjacentHTML(
-      //         "beforeend",
-      //         '<input type="checkbox" name="tickets" id="s' +
-      //           (i + 2) +
-      //           '" /><label for="s' +
-      //           (i + 2) +
-      //           '" class="seat ' +
-      //           booked +
-      //           '"></label>'
-      //       );
-      //     }
-      //   }
-      // }
       let tickets = seats.querySelectorAll("input");
       tickets.forEach((ticket) => {
         ticket.addEventListener("change", () => {

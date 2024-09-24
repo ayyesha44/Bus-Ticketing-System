@@ -49,14 +49,11 @@ def signup():
             return redirect('/login')
     return render_template('signup.html', form=form, title="Sign Up")
 
-@app.route('/seats')
+@app.route('/seats', methods=["GET", "POST"])
 @login_required
 def select_seat():
-    # result = session.query(Seat).filter(Seat.selected == 1)
-    # for row in result:
-    #     seated = seated + row.id 
-    # return render_template("select_seat.html", seated=seated)
-    return render_template("select_seat.html")
+    seat = Seat.query.all()
+    return render_template("select_seat.html", seat=seat)
 
 @app.route('/profile')
 @login_required
