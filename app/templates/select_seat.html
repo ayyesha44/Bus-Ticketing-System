@@ -245,9 +245,9 @@
           rgb(108, 102, 194)
         ); */
       }
-      /* .p {
-        display: hidden;
-      } */
+      #demo {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -332,25 +332,21 @@
           }
           document.querySelector(".amount").innerHTML = amount;
           document.querySelector(".count").innerHTML = count;
+          document.querySelector("#demo").innerHTML = amount;
         });
       });
       
 
       let st = document.querySelector(".seat_type")
       let type = st.querySelectorAll("input")
-      
       type.forEach((selections) => {
         selections.addEventListener("change", () => {
-          var price_tics = document.querySelector(".amount").innerHTML;
-          // let amount = document.querySelector(".amount").innerHTML;
-          // amount = Number(amount);
-          // price_tics = Number(amount)
+          let price_tics = document.querySelector("#demo").innerHTML;
           price_tics = Number(price_tics);
           amount = 0;
           amount = Number(amount);
           if (document.getElementById('d1').checked){
             amount +=price_tics;
-            document.getElementById('demo').innerHTML = price_tics
             amount += 200;
           }
           else if (document.getElementById('d2').checked){
