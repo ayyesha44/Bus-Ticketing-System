@@ -1,8 +1,8 @@
 import sqlalchemy
 from app.models import User
 from app import app, db
-from app.forms import Loginform, Signupform
-from flask import render_template, redirect, flash
+from app.forms import Loginform, Signupform, Editprofileform
+from flask import render_template, redirect, flash, request
 from flask_login import current_user, login_user, login_required, logout_user
 from app.models import User, Seat
 
@@ -55,7 +55,27 @@ def select_seat():
     seat = Seat.query.all()
     return render_template("select_seat.html", seat=seat)
 
+@app.route('/booking')
+@login_required
+def booking():
+    return render_template("booking.html")
+
 @app.route('/profile')
 @login_required
 def profile():
     return render_template("profile.html")
+
+@app.route('/edit_profile', methods=['GET', 'POST'])
+@login_required
+def edit_profile():
+    form = Editprofileform()
+    if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.email = form.email.data
+        db.session.commit()
+        flash('Your changes have been saved.')
+        return redirect('/edit_profile')
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.email.data = current_user.email
+    return render_template('edit_profile.html', title='Edit Profile', form=form)
