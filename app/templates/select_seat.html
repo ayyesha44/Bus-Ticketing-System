@@ -250,6 +250,7 @@
       }
     </style>
   </head>
+
   <body>
     <div class="center">
       <div class="tickets">
@@ -277,31 +278,31 @@
                     {%endif%}
                   {%endfor%}
                 </div>
-              </form>
+              </div>
             </div>
-          </div>
-          <div class="variant">
-            <div class="seat_type">
-              <input type="radio" name="date" id="d1"/>
-              <label for="d1" class="seat_type-item">
-                <div class="day">First Class</div>
-                <div class="date">+RM 200</div>
-              </label>
-              <input type="radio" id="d2" name="date"/>
-              <label class="seat_type-item" for="d2">
-                <div class="day">Business</div>
-                <div class="date">+RM 100</div>
-              </label>
-              <input type="radio" id="d3" name="date"/>
-              <label class="seat_type-item" for="d3">
-                <div class="day">Economy</div>
-                <div class="date">+RM 0</div>
-              </label>
-          </div>
-          </div>
+            <div class="variant">
+              <div class="seat_type" >
+                <input type="radio" name="date" id="d1"/>
+                <label for="d1" class="seat_type-item">
+                  <div class="day">First Class</div>
+                  <div class="date">+RM 200</div>
+                </label>
+                <input type="radio" id="d2" name="date"/>
+                <label class="seat_type-item" for="d2">
+                  <div class="day">Business</div>
+                  <div class="date">+RM 100</div>
+                </label>
+                <input type="radio" id="d3" name="date"/>
+                <label class="seat_type-item" for="d3">
+                  <div class="day">Economy</div>
+                  <div class="date">+RM 0</div>
+                </label>
+              </div>
+            </div>
+          </form>
           <div class="price">
             <div class="total">
-              <span> <span class="count">0</span> Tickets </span>
+              <span> <span class="count" id="pls2">0</span> Tickets </span>
               <div class="amount1">
                 <div class="RM">RM</div>
                 <div class="amount" id="pls">0</div>
@@ -309,30 +310,45 @@
               </div>
             </div>
             <button type="submit" form="form1" value="Submit">Add to cart</button>
+            <button onclick="clearBox()" type="reset" form="form1" value="Reset">Reset</button>
           </div>
         </div>
       </div>
+       
     </div>
     <script>
       let seats = document.querySelector(".all-seats");
       let tickets = seats.querySelectorAll("input");
+      ori_amount = 0;
       tickets.forEach((ticket) => {
         ticket.addEventListener("change", () => {
           let amount = document.querySelector(".amount").innerHTML;
           let count = document.querySelector(".count").innerHTML;
           amount = Number(amount);
           count = Number(count);
+          ori_amount = Number(ori_amount);
 
           if (ticket.checked) {
             count += 1;
             amount += 200;
+            ori_amount += 200;
+            document.getElementById('d1').checked = false;
+            document.getElementById('d2').checked = false;
+            document.getElementById('d3').checked = false;
           } else {
             count -= 1;
             amount -= 200;
+            if (document.getElementById('d1').checked && amount >= ori_amount){
+              amount -=200;
+            }
+            else if (document.getElementById('d2').checked && amount >= ori_amount){
+              amount -=100;
+            }
+            ori_amount -= 200;
           }
           document.querySelector(".amount").innerHTML = amount;
+          document.querySelector("#demo").innerHTML = ori_amount;
           document.querySelector(".count").innerHTML = count;
-          document.querySelector("#demo").innerHTML = amount;
         });
       });
       
@@ -341,17 +357,20 @@
       let type = st.querySelectorAll("input")
       type.forEach((selections) => {
         selections.addEventListener("change", () => {
+          
           let price_tics = document.querySelector("#demo").innerHTML;
+          let tics_count = document.querySelector(".count").innerHTML;
           price_tics = Number(price_tics);
           amount = 0;
           amount = Number(amount);
           if (document.getElementById('d1').checked){
             amount +=price_tics;
-            amount += 200;
+            amount += 200 * tics_count;
+            
           }
           else if (document.getElementById('d2').checked){
             amount +=price_tics;
-            amount += 100;
+            amount += 100 * tics_count;
           }
           else if (document.getElementById('d3').checked){
             amount += price_tics;
@@ -359,45 +378,25 @@
           document.querySelector(".amount").innerHTML = amount;
         })
       })
+      function clearBox(){
+        document.getElementById("pls").innerHTML = 0;
+        document.getElementById("demo").innerHTML = 0;
+        ori_amount = 0;
+        document.getElementById("pls2").innerHTML = 0;
+        for (let i = 0; i < 36; i++){
+          document.getElementById(i+1).disabled=false;
+        } 
+      }
 
-      // let st2 = document.querySelector(".seat_type")
-      // let type2 = st.querySelectorAll("#d2")
-      // type2.forEach((selections) => {
-      //   selections.addEventListener("change", () => {
-      //     let amount = document.querySelector(".amount").innerHTML;
-      //     amount = Number(amount);
-      //     if (selections.checked){
-      //       document.getElementById("d1").checked = false;
-      //       amount -= 200;
-      //       amount += 100;
+      document.getElementById("d1").addEventListener("checked", disable);
+      document.getElementById("d2").addEventListener("checked", disable);
+      document.getElementById("d3").addEventListener("checked", disable);
 
-      //     }
-      //     else if (selections.checked =false){
-      //       amount -= 100;
-      //     }
-      //     document.querySelector(".amount").innerHTML = amount;
-      //   })
-      // })
-
-      // let st3 = document.querySelector(".seat_type")
-      // let type3 = st.querySelectorAll("#d2")
-      // type3.forEach((selections) => {
-      //   selections.addEventListener("change", () => {
-      //     let amount = document.querySelector(".amount").innerHTML;
-      //     amount = Number(amount);
-      //     if (selections.checked){
-      //       document.getElementById("d1").checked = false;
-      //       amount -= 200;
-      //       amount += 100;
-
-      //     }
-      //     else if (selections.checked =false){
-      //       amount -= 100;
-      //     }
-      //     document.querySelector(".amount").innerHTML = amount;
-      //   })
-      // })
-
+    function disable() {
+        for (let i = 0; i < 36; i++){
+          document.getElementById(i+1).disabled=true;
+        }   
+      }
     </script>
   </body>
 </html>
