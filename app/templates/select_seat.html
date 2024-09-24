@@ -182,7 +182,7 @@
         cursor: pointer;
         margin-top: 20px;
       }
-      .timings {
+      .variant {
         width:auto;
         display: flex;
         flex-direction: column;
@@ -190,14 +190,14 @@
         justify-content: center;
         margin-top: 30px;
       }
-      .dates {
+      .seat_type {
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
       }
-      .dates-item {
-        width: 50px;
+      .seat_type-item {
+        width: 100px;
         height: 40px;
         background: rgb(233, 233, 233);
         text-align: center;
@@ -212,7 +212,7 @@
       .day {
         font-size: 12px;
       }
-      .times {
+      /* .times {
         width: 100%;
         display: flex;
         align-items: center;
@@ -226,8 +226,9 @@
         background: rgb(233, 233, 233);
         border-radius: 2mm;
         cursor: pointer;
-      }
-      .timings input:checked + label {
+      } */
+  
+      .variant input:checked + label {
         background: rgb(28, 185, 120);
         color: white;
       }
@@ -244,6 +245,9 @@
           rgb(108, 102, 194)
         ); */
       }
+      /* .p {
+        display: hidden;
+      } */
     </style>
   </head>
   <body>
@@ -276,22 +280,22 @@
               </form>
             </div>
           </div>
-          <div class="timings">
-            <div class="dates">
-              <input type="radio" name="date" id="d1" checked />
-              <label for="d1" class="dates-item">
-                <div class="day">Sun</div>
-                <div class="date">11</div>
+          <div class="variant">
+            <div class="seat_type">
+              <input type="radio" name="date" id="d1"/>
+              <label for="d1" class="seat_type-item">
+                <div class="day">First Class</div>
+                <div class="date">+RM 200</div>
               </label>
-              <input type="radio" id="d2" name="date" />
-              <label class="dates-item" for="d2">
-                <div class="day">Mon</div>
-                <div class="date">12</div>
+              <input type="radio" id="d2" name="date"/>
+              <label class="seat_type-item" for="d2">
+                <div class="day">Business</div>
+                <div class="date">+RM 100</div>
               </label>
-              <input type="radio" id="d3" name="date" />
-              <label class="dates-item" for="d3">
-                <div class="day">Tue</div>
-                <div class="date">13</div>
+              <input type="radio" id="d3" name="date"/>
+              <label class="seat_type-item" for="d3">
+                <div class="day">Economy</div>
+                <div class="date">+RM 0</div>
               </label>
           </div>
           </div>
@@ -300,7 +304,8 @@
               <span> <span class="count">0</span> Tickets </span>
               <div class="amount1">
                 <div class="RM">RM</div>
-                <div class="amount">0</div>
+                <div class="amount" id="pls">0</div>
+                <p id="demo"></p>
               </div>
             </div>
             <button type="submit" form="form1" value="Submit">Add to cart</button>
@@ -329,6 +334,74 @@
           document.querySelector(".count").innerHTML = count;
         });
       });
+      
+
+      let st = document.querySelector(".seat_type")
+      let type = st.querySelectorAll("input")
+      
+      type.forEach((selections) => {
+        selections.addEventListener("change", () => {
+          var price_tics = document.querySelector(".amount").innerHTML;
+          // let amount = document.querySelector(".amount").innerHTML;
+          // amount = Number(amount);
+          // price_tics = Number(amount)
+          price_tics = Number(price_tics);
+          amount = 0;
+          amount = Number(amount);
+          if (document.getElementById('d1').checked){
+            amount +=price_tics;
+            document.getElementById('demo').innerHTML = price_tics
+            amount += 200;
+          }
+          else if (document.getElementById('d2').checked){
+            amount +=price_tics;
+            amount += 100;
+          }
+          else if (document.getElementById('d3').checked){
+            amount += price_tics;
+          }
+          document.querySelector(".amount").innerHTML = amount;
+        })
+      })
+
+      // let st2 = document.querySelector(".seat_type")
+      // let type2 = st.querySelectorAll("#d2")
+      // type2.forEach((selections) => {
+      //   selections.addEventListener("change", () => {
+      //     let amount = document.querySelector(".amount").innerHTML;
+      //     amount = Number(amount);
+      //     if (selections.checked){
+      //       document.getElementById("d1").checked = false;
+      //       amount -= 200;
+      //       amount += 100;
+
+      //     }
+      //     else if (selections.checked =false){
+      //       amount -= 100;
+      //     }
+      //     document.querySelector(".amount").innerHTML = amount;
+      //   })
+      // })
+
+      // let st3 = document.querySelector(".seat_type")
+      // let type3 = st.querySelectorAll("#d2")
+      // type3.forEach((selections) => {
+      //   selections.addEventListener("change", () => {
+      //     let amount = document.querySelector(".amount").innerHTML;
+      //     amount = Number(amount);
+      //     if (selections.checked){
+      //       document.getElementById("d1").checked = false;
+      //       amount -= 200;
+      //       amount += 100;
+
+      //     }
+      //     else if (selections.checked =false){
+      //       amount -= 100;
+      //     }
+      //     document.querySelector(".amount").innerHTML = amount;
+      //   })
+      // })
+
     </script>
   </body>
 </html>
