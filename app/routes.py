@@ -2,7 +2,7 @@ import sqlalchemy
 from app.models import User
 from app import app, db
 from app.forms import Loginform, Signupform, Editprofileform
-from flask import render_template, redirect, flash, request
+from flask import render_template, redirect, flash, request, url_for
 from flask_login import current_user, login_user, login_required, logout_user
 from app.models import User, Seat
 
@@ -53,7 +53,27 @@ def signup():
 @login_required
 def select_seat():
     seat = Seat.query.all()
-    return render_template("select_seat.html", seat=seat)
+    user = []
+    i = 0
+    if request.method =="POST":
+        for x in range(1,36):
+            tmp = request.form.get(str(x))
+            if tmp == "1":
+                seat_update = Seat.query.filter_by(id=str(x)).update(dict(selected=True))
+                db.session.commit()
+            elif tmp is None:
+                tmp = "0"
+            user += tmp
+
+
+  
+        return redirect(url_for("user", usr=user))
+    else:
+        return render_template("select_seat.html", seat=seat)
+
+@app.route("/<usr>")
+def user(usr):
+    return f"<h1>{usr}</h1>"
 
 @app.route('/booking')
 @login_required

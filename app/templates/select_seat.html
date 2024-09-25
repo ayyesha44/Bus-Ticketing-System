@@ -266,15 +266,15 @@
             </div>
             <div class="train_img">
               <img src="../static/train.png" />
-              <form method="POST" action="/" id="form1">
+              <form method="POST" id="form1">
                 <div class="all-seats">
                   {%for seat in seat%}
                     {% if seat.selected == True %}
-                      <input type="checkbox" name="tickets" id="{{seat.id}}" disabled/>
+                      <input type="checkbox" name="{{seat.id}}" id="{{seat.id}}" value="2" disabled/>
                       <label for="{{seat.id}}" class="seat booked"></label>
                     {%else%}
-                      <input type="checkbox" name="tickets" id="{{seat.id}}" />
-                      <label for="{{seat.id}}" class="seat"></label>
+                    <input type="checkbox" name="{{seat.id}}" id="{{seat.id}}" value="1" />
+                    <label for="{{seat.id}}" class="seat"></label>
                     {%endif%}
                   {%endfor%}
                 </div>
