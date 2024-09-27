@@ -266,15 +266,15 @@
             </div>
             <div class="train_img">
               <img src="../static/train.png" />
-              <form method="POST" action="/" id="form1">
-                <div class="all-seats">
+              <form method="POST" id="form1">
+                <div class="all-seats" required>
                   {%for seat in seat%}
                     {% if seat.selected == True %}
-                      <input type="checkbox" name="tickets" id="{{seat.id}}" disabled/>
+                      <input type="checkbox" name="{{seat.id}}" id="{{seat.id}}" value="2" disabled/>
                       <label for="{{seat.id}}" class="seat booked"></label>
                     {%else%}
-                      <input type="checkbox" name="tickets" id="{{seat.id}}" />
-                      <label for="{{seat.id}}" class="seat"></label>
+                    <input type="checkbox" name="{{seat.id}}" id="{{seat.id}}" value="1"/>
+                    <label for="{{seat.id}}" class="seat"></label>
                     {%endif%}
                   {%endfor%}
                 </div>
@@ -282,17 +282,17 @@
             </div>
             <div class="variant">
               <div class="seat_type" >
-                <input type="radio" name="date" id="d1"/>
+                <input type="radio" name="date" id="d1" value="Premium" required/>
                 <label for="d1" class="seat_type-item">
                   <div class="day">First Class</div>
                   <div class="date">+RM 200</div>
                 </label>
-                <input type="radio" id="d2" name="date"/>
+                <input type="radio" id="d2" name="date" value="Business" required/>
                 <label class="seat_type-item" for="d2">
                   <div class="day">Business</div>
                   <div class="date">+RM 100</div>
                 </label>
-                <input type="radio" id="d3" name="date"/>
+                <input type="radio" id="d3" name="date" value="Economy" required/>
                 <label class="seat_type-item" for="d3">
                   <div class="day">Economy</div>
                   <div class="date">+RM 0</div>
@@ -309,7 +309,7 @@
                 <p id="demo"></p>
               </div>
             </div>
-            <button type="submit" form="form1" value="Submit">Add to cart</button>
+            <button onclick="valthisform(); valthisform2()" type="submit" form="form1" value="Submit">Add to cart</button>
             <button onclick="clearBox()" type="reset" form="form1" value="Reset">Reset</button>
           </div>
         </div>
@@ -397,6 +397,42 @@
           document.getElementById(i+1).disabled=true;
         }   
       }
+    function valthisform()
+    {
+        var cb = document.querySelector(".all-seats")
+        var checkboxs=cb.querySelectorAll("input");
+        var okay=false;
+        for(var i=0,l=checkboxs.length;i<l;i++)
+        {
+            if(checkboxs[i].checked)
+            {
+                okay=true;
+                break;
+            }
+        }
+        if(okay){
+          pass
+        }
+        else {
+          alert("Please select at least 1 seat");
+          event.preventDefault();
+        
+        
+   }
+  }
+   function valthisform2()
+   {
+    var rd = document.querySelector(".seat_type")
+    var radios = rd.querySelectorAll("input");
+
+    for (var i = 0, len = radios.length; i < len; i++) {
+          if (radios[i].checked) {
+              return true;
+          }
+    }
+    alert("Please pick your seat type")
+    return false;
+   }
     </script>
   </body>
 </html>
