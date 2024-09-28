@@ -1,122 +1,162 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Ticket</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-    }
-    .container {
-      width: 80%;
-      margin: 40px auto;
-      padding: 20px;
-      background-color: #f9f9f9;
-      border: 1px solid #ddd;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    .row {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      margin-bottom: 20px;
-    }
-    .col-md-6 {
-      width: 50%;
-      padding: 10px;
-    }
-    h2 {
-      margin-top: 0;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Details</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Ticket</h1>
-    <div class="row">
-      <div class="col-md-6">
-        <h2>Route Information</h2>
-        <p><strong>Route:</strong> <span id="route"></span></p>
-        <p><strong>Train Number:</strong> <span id="train-number"></span></p>
-        <p><strong>Departure:</strong> <span id="departure"></span></p>
-        <p><strong>Arrival:</strong> <span id="arrival"></span></p>
-        <p><strong>Duration:</strong> <span id="duration"></span></p>
-      </div>
-      <div class="col-md-6">
-        <h2>Seat Information</h2>
-        <p><strong>Seat Number:</strong> <span id="seat-number"></span></p>
-        <p><strong>Seat Type:</strong> <span id="seat-type"></span></p>
-        <p><strong>Price:</strong> <span id="price"></span></p>
-      </div>
+    <div class="container">
+        <h1>Ticket Details</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Route Information</h2>
+                <p>Route: <span id="route-name"></span></p>
+                <p>Train Number: <span id="train-number"></span></p>
+                <p>Departure: <span id="departure-station"></span>, <span id="departure-time"></span></p>
+                <p>Arrival: <span id="arrival-station"></span>, <span id="arrival-time"></span></p>
+                <p>Duration: <span id="duration"></span></p>
+            </div>
+            <div class="col-md-6">
+                <h2>Seat Information</h2>
+                <p>Selected Seat: <span id="selected-seat"></span></p>
+            </div>
+        </div>
+
+        <select id="ticket-select">
+            <option value="1A45 KL - Johor">1A45 KL - Johor</option>
+            <option value="2B12 Penang - KL">2B12 Penang - KL</option>
+            <option value="3C34 Malacca - KL">3C34 Malacca - KL</option>
+            <option value="4D56 Ipoh - KL">4D56 Ipoh - KL</option>
+            <option value="5E78 Kuantan - KL">5E78 Kuantan - KL</option>
+        </select>
+
+        <select id="seat-select">
+        </select>
+
+        <button id="submit-button">Submit</button>
+
+        <script>
+            const tickets = [
+              {
+                routeName: '1A45 KL - Johor',
+                trainNumber: '102 Express',
+                departureStation: 'Kuala Lumpur Sentral',
+                departureTime: '09:00 AM',
+                arrivalStation: 'Johor Bahru Sentral',
+                arrivalTime: '01:45 PM',
+                duration: '4 hours 45 minutes',
+              },
+              {
+                routeName: '2B12 Penang - KL',
+                trainNumber: '202 Express',
+                departureStation: 'Butterworth',
+                departureTime: '08:00 AM',
+                arrivalStation: 'Kuala Lumpur Sentral',
+                arrivalTime: '12:30 PM',
+                duration: '4 hours 30 minutes',
+              },
+              {
+                routeName: '3C34 Malacca - KL',
+                trainNumber: '302 Express',
+                departureStation: 'Malacca Sentral',
+                departureTime: '10:00 AM',
+                arrivalStation: 'Kuala Lumpur Sentral',
+                arrivalTime: '01:00 PM',
+                duration: '3 hours',
+              },
+              {
+                routeName: '4D56 Ipoh - KL',
+                trainNumber: '402 Express',
+                departureStation: 'Ipoh Sentral',
+                departureTime: '09:30 AM',
+                arrivalStation: 'Kuala Lumpur Sentral',
+                arrivalTime: '12:30 PM',
+                duration: '3 hours',
+              },
+              {
+                routeName: '5E78 Kuantan - KL',
+                trainNumber: '502 Express',
+                departureStation: 'Kuantan Sentral',
+                departureTime: '08:30 AM',
+                arrivalStation: 'Kuala Lumpur Sentral',
+                arrivalTime: '01:30 PM',
+                duration: '5 hours',
+              },
+            ];
+
+            function displayTicketDetails(ticket) {
+              document.getElementById('route-name').innerHTML = ticket.routeName;
+              document.getElementById('train-number').innerHTML = ticket.trainNumber;
+              document.getElementById('departure-station').innerHTML = ticket.departureStation;
+              document.getElementById('departure-time').innerHTML = ticket.departureTime;
+              document.getElementById('arrival-station').innerHTML = ticket.arrivalStation;
+              document.getElementById('arrival-time').innerHTML = ticket.arrivalTime;
+              document.getElementById('duration').innerHTML = ticket.duration;
+            }
+
+            function displaySeatOptions() {
+              const seatSelect = document.getElementById('seat-select');
+              seatSelect.innerHTML = '';
+              for (let i = 1; i <= 35; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.text = `Seat ${i}`;
+                seatSelect.appendChild(option);
+              }
+            }
+
+            function displaySelectedSeat(seatNumber) {
+              document.getElementById('selected-seat').innerHTML = `Seat ${seatNumber}`;
+            }
+
+            const ticketSelect = document.getElementById('ticket-select');
+            ticketSelect.addEventListener('change', () => {
+              let selectedTicket = null;
+              for (let i = 0; i < tickets.length; i++) {
+                if (tickets[i].routeName === ticketSelect.value) {
+                  selectedTicket = tickets[i];
+                  break;
+                }
+              }
+              if (selectedTicket) {
+                displayTicketDetails(selectedTicket);
+                displaySeatOptions();
+                displaySelectedSeat(1);
+              }
+            });
+
+            const seatSelect = document.getElementById('seat-select');
+            seatSelect.addEventListener('change', () => {
+              displaySelectedSeat(seatSelect.value);
+            });
+
+            const submitButton = document.getElementById('submit-button');
+            submitButton.addEventListener('click', () => {
+              const routeName = document.getElementById('route-name').innerHTML;
+              const trainNumber = document.getElementById('train-number').innerHTML;
+              const departureStation = document.getElementById('departure-station').innerHTML;
+              const departureTime = document.getElementById('departure-time').innerHTML;
+              const arrivalStation = document.getElementById('arrival-station').innerHTML;
+              const arrivalTime = document.getElementById('arrival-time').innerHTML;
+              const duration = document.getElementById('duration').innerHTML;
+              const seatNumber = document.getElementById('selected-seat').innerHTML;
+
+              const url = `ticket_details.html?routeName=${routeName}&trainNumber=${trainNumber}&departureStation=${departureStation}&departureTime=${departureTime}&arrivalStation=${arrivalStation}&arrivalTime=${arrivalTime}&duration=${duration}&seatNumber=${seatNumber}`;
+              window.location.href = url;
+            });
+        </script>
     </div>
-  </div>
-
-  <script>
-    const tickets = {
-      '1A45+KL+-+Johor': {
-        route: 'Kuala Lumpur to Johor Bahru',
-        trainNumber: '102 Express',
-        departure: 'Kuala Lumpur Sentral, 09:00 AM',
-        arrival: 'Johor Bahru Sentral, 01:45 PM',
-        duration: '4 hours 45 minutes',
-        seatNumber: '1A45',
-        seatType: 'First Class',
-        price: 'RM 200'
-      },
-      '2B12+Penang+-+KL': {
-        route: 'Penang to Kuala Lumpur',
-        trainNumber: '202 Express',
-        departure: 'Butterworth, 08:00 AM',
-        arrival: 'Kuala Lumpur Sentral, 12:30 PM',
-        duration: '4 hours 30 minutes',
-        seatNumber: '2B12',
-        seatType: 'First Class',
-        price: 'RM 200'
-      },
-      '3C34+Malacca+-+KL': {
-        route: 'Malacca to Kuala Lumpur',
-        trainNumber: '302 Express',
-        departure: 'Malacca Sentral, 10:00 AM',
-        arrival: 'Kuala Lumpur Sentral, 01:00 PM',
-        duration: '3 hours',
-        seatNumber: '3C34',
-        seatType: 'First Class',
-        price: 'RM 200'
-      },
-      '4D56+Ipoh+-+KL': {
-        route: 'Ipoh to Kuala Lumpur',
-        trainNumber: '402 Express',
-        departure: 'Ipoh Sentral, 09:30 AM',
-        arrival: 'Kuala Lumpur Sentral, 12:30 PM',
-        duration: '3 hours',
-        seatNumber: '4D56',
-        seatType: 'First Class',
-        price: 'RM 200'
-      },
-      '5E78+Kuantan+-+KL': {
-        route: 'Kuantan to Kuala Lumpur',
-        trainNumber: '502 Express',
-        departure: 'Kuantan Sentral, 08:30 AM',
-        arrival: 'Kuala Lumpur Sentral, 01:30 PM',
-        duration: '5 hours',
-        seatNumber: '5 E78',
-        seatType: 'First Class',
-        price: 'RM 200'
-      }
-    };
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const selectedTicket = urlParams.get('route');
-
- const ticketInfo = tickets[selectedTicket];
-
-    document.getElementById('route').innerHTML = ticketInfo.route;
-    document.getElementById('train-number').innerHTML = ticketInfo.trainNumber;
-    document.getElementById('departure').innerHTML = ticketInfo.departure;
-    document.getElementById('arrival').innerHTML = ticketInfo.arrival;
-    document.getElementById('duration').innerHTML = ticketInfo.duration;
-    document.getElementById('seat-number').innerHTML = ticketInfo.seatNumber;
-    document.getElementById('seat-type').innerHTML = ticketInfo.seatType;
-    document.getElementById('price').innerHTML = ticketInfo.price;
-  </script>
 </body>
 </html>
