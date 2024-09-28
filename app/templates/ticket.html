@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ticket</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      width: 80%;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .col-md-6 {
+      width: 50%;
+      padding: 10px;
+    }
+    h2 {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Ticket</h1>
+    <div class="row">
+      <div class="col-md-6">
+        <h2>Route Information</h2>
+        <p><strong>Route:</strong> <span id="route"></span></p>
+        <p><strong>Train Number:</strong> <span id="train-number"></span></p>
+        <p><strong>Departure:</strong> <span id="departure"></span></p>
+        <p><strong>Arrival:</strong> <span id="arrival"></span></p>
+        <p><strong>Duration:</strong> <span id="duration"></span></p>
+      </div>
+      <div class="col-md-6">
+        <h2>Seat Information</h2>
+        <p><strong>Seat Number:</strong> <span id="seat-number"></span></p>
+        <p><strong>Seat Type:</strong> <span id="seat-type"></span></p>
+        <p><strong>Price:</strong> <span id="price"></span></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const tickets = {
+      '1A45+KL+-+Johor': {
+        route: 'Kuala Lumpur to Johor Bahru',
+        trainNumber: '102 Express',
+        departure: 'Kuala Lumpur Sentral, 09:00 AM',
+        arrival: 'Johor Bahru Sentral, 01:45 PM',
+        duration: '4 hours 45 minutes',
+        seatNumber: '1A45',
+        seatType: 'First Class',
+        price: 'RM 200'
+      },
+      '2B12+Penang+-+KL': {
+        route: 'Penang to Kuala Lumpur',
+        trainNumber: '202 Express',
+        departure: 'Butterworth, 08:00 AM',
+        arrival: 'Kuala Lumpur Sentral, 12:30 PM',
+        duration: '4 hours 30 minutes',
+        seatNumber: '2B12',
+        seatType: 'First Class',
+        price: 'RM 200'
+      },
+      '3C34+Malacca+-+KL': {
+        route: 'Malacca to Kuala Lumpur',
+        trainNumber: '302 Express',
+        departure: 'Malacca Sentral, 10:00 AM',
+        arrival: 'Kuala Lumpur Sentral, 01:00 PM',
+        duration: '3 hours',
+        seatNumber: '3C34',
+        seatType: 'First Class',
+        price: 'RM 200'
+      },
+      '4D56+Ipoh+-+KL': {
+        route: 'Ipoh to Kuala Lumpur',
+        trainNumber: '402 Express',
+        departure: 'Ipoh Sentral, 09:30 AM',
+        arrival: 'Kuala Lumpur Sentral, 12:30 PM',
+        duration: '3 hours',
+        seatNumber: '4D56',
+        seatType: 'First Class',
+        price: 'RM 200'
+      },
+      '5E78+Kuantan+-+KL': {
+        route: 'Kuantan to Kuala Lumpur',
+        trainNumber: '502 Express',
+        departure: 'Kuantan Sentral, 08:30 AM',
+        arrival: 'Kuala Lumpur Sentral, 01:30 PM',
+        duration: '5 hours',
+        seatNumber: '5 E78',
+        seatType: 'First Class',
+        price: 'RM 200'
+      }
+    };
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedTicket = urlParams.get('route');
+
+ const ticketInfo = tickets[selectedTicket];
+
+    document.getElementById('route').innerHTML = ticketInfo.route;
+    document.getElementById('train-number').innerHTML = ticketInfo.trainNumber;
+    document.getElementById('departure').innerHTML = ticketInfo.departure;
+    document.getElementById('arrival').innerHTML = ticketInfo.arrival;
+    document.getElementById('duration').innerHTML = ticketInfo.duration;
+    document.getElementById('seat-number').innerHTML = ticketInfo.seatNumber;
+    document.getElementById('seat-type').innerHTML = ticketInfo.seatType;
+    document.getElementById('price').innerHTML = ticketInfo.price;
+  </script>
+</body>
+</html>
