@@ -298,93 +298,100 @@
     </style>
 </head>
 <body>
-    <div class='container'>
-        <div class='window'>
-          <div class='order-info'>
+<div class='container'>
+    <div class='window'>
+        <div class='order-info'>
             <div class='order-info-content'>
-              <h2>Order Summary</h2>
-                      <div class='line'></div>
-              <table class='order-table'>
-                <tbody>
-                  <tr>
-                    <td><img src='../static/tickets.png' class='full-width'></img>
-                    </td>
-                    <td>
-                      <br> <span class='thin'>Train Tickets</span>
-                      <br>
-                      {%for curr in curr%}
-                        Seat {{curr.seat_id}}<br> <span class='thin small'> {{curr.seat_type}}<br><br></span>
-                      {%endfor%}
-                    </td>
-      
-                </tr>
-                <tr>
-                    <td>
-                        <div class="price1">RM</div>
-                        <div class='price'>{{total}}</div>
-                    </td>
-                </tr>
-            </tbody>
-            
-        </table>
-        <div class='line'></div>
-        
-        <input type="checkbox" class="add" name="addons" id="blanket"/>
-        <label for="blanket">Blanket (+RM 20)</label>
-        <input type="checkbox" class="add" name="addons" id="snacks"/>
-        <label for="snacks">Snacks (+RM 10)</label>
-        
-        <div class='line'></div>
-        <div class='total'>
+                <h2>Order Summary</h2>
+                <div class='line'></div>
+                <table class='order-table'>
+                    <tbody>
+                    <tr>
+                        <td><img src='../static/tickets.png' class='full-width'></img>
+                        </td>
+                        <td>
+                            <br> <span class='thin'>Train Tickets</span>
+                            <br>
+                            {%for curr in curr%}
+                            Seat {{curr.seat_id}}<br> <span class='thin small'> {{curr.seat_type}}<br><br></span>
+                            {%endfor%}
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="price1">RM</div>
+                            <div class='price'>{{total}}</div>
+                        </td>
+                    </tr>
+                    </tbody>
+
+                </table>
+                <div class='line'></div>
+
+                <input type="checkbox" class="add" name="addons" id="blanket"/>
+                <label for="blanket">Blanket (+RM 20)</label>
+                <input type="checkbox" class="add" name="addons" id="snacks"/>
+                <label for="snacks">Snacks (+RM 10)</label>
+
+                <div class='line'></div>
+                <div class='total'>
             <span style='float:left;'>
                 TOTAL
             </span>
-            <span style='float:right;  text-align:right;' class="total1">
+                    <span style='float:right;  text-align:right;' class="total1">
                 {{total}}
             </span>
-            <span style='float:right; padding-right: 5px; text-align:right;' >
+                    <span style='float:right; padding-right: 5px; text-align:right;'>
                 RM
             </span>
-            
+
+                </div>
+            </div>
+        </div>
+        <div class='credit-info'>
+            <div class='credit-info-content'>
+                <table class='half-input-table'>
+                    <tr>
+                        <td>Please select your card:</td>
+                        <td>
+                            <div class='dropdown' id='card-dropdown'>
+                                <div class='dropdown-btn' id='current-card'>Visa</div>
+                                <div class='dropdown-select'>
+                                    <ul>
+                                        <li>Master Card</li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <form method="POST">
+                </table>
+                <img src='https://dl.dropboxusercontent.com/s/ubamyu6mzov5c80/visa_logo%20%281%29.png' height='80'
+                     class='credit-card-image' id='credit-card-image'></img>
+                Card Number
+                <input class='input-field' required></input>
+                Card Holder
+                <input class='input-field' required></input>
+                <table class='half-input-table'>
+                    <tr>
+                        <td> Expires
+                            <input class='input-field' required></input>
+                        </td>
+                        <td>CVC
+                            <input class='input-field' required></input>
+                        </td>
+                    </tr>
+                </table>
+                <button class='pay-btn'>Checkout</button>
+                </form>
+
+            </div>
+
         </div>
     </div>
 </div>
-<div class='credit-info'>
-    <div class='credit-info-content'>
-        <table class='half-input-table'>
-            <tr><td>Please select your card: </td><td><div class='dropdown' id='card-dropdown'><div class='dropdown-btn' id='current-card'>Visa</div>
-                <div class='dropdown-select'>
-                    <ul>
-                        <li>Master Card</li>
-                        
-                    </ul></div>
-                </div>
-            </td></tr>
-            <form method="POST">
-        </table>
-                  <img src='https://dl.dropboxusercontent.com/s/ubamyu6mzov5c80/visa_logo%20%281%29.png' height='80' class='credit-card-image' id='credit-card-image'></img>
-                  Card Number
-                  <input class='input-field' required></input>
-                  Card Holder
-                  <input class='input-field' required></input>
-                  <table class='half-input-table'>
-                      <tr>
-                          <td> Expires
-                              <input class='input-field' required></input>
-                            </td>
-                            <td>CVC
-                        <input class='input-field' required></input>
-                      </td>
-                    </tr>
-                  </table>
-                      <button class='pay-btn'>Checkout</button>
-                  </form>
-                  
-                </div>
-      
-              </div>
-            </div>
-      </div>
 </body>
 <script>
     var cardDrop = document.getElementById('card-dropdown');
