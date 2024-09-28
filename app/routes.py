@@ -128,3 +128,15 @@ def edit_profile():
         form.username.data = current_user.username
         form.email.data = current_user.email
     return render_template('edit_profile.html', title='Edit Profile', form=form)
+
+@app.route('/ticket')
+@login_required
+def ticket():
+    return render_template("ticket.html")
+
+@app.route('/ticket_details')
+@login_required
+def ticket_details():
+    return render_template("ticket_details.html")
+
+

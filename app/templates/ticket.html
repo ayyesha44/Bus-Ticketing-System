@@ -1,23 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ticket Details</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <style>
-        .container {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
+{% extends "base.html" %}
+
+{% block body %}
         <h1>Ticket Details</h1>
         <div class="row">
             <div class="col-md-6">
@@ -45,7 +28,7 @@
         <select id="seat-select">
         </select>
 
-        <button id="submit-button">Submit</button>
+        <button class= "btn btn-primary" id="submit-button">Submit</button>
 
         <script>
             const tickets = [
@@ -153,10 +136,8 @@
               const duration = document.getElementById('duration').innerHTML;
               const seatNumber = document.getElementById('selected-seat').innerHTML;
 
-              const url = `ticket_details.html?routeName=${routeName}&trainNumber=${trainNumber}&departureStation=${departureStation}&departureTime=${departureTime}&arrivalStation=${arrivalStation}&arrivalTime=${arrivalTime}&duration=${duration}&seatNumber=${seatNumber}`;
+              const url = `ticket_details?routeName=${routeName}&trainNumber=${trainNumber}&departureStation=${departureStation}&departureTime=${departureTime}&arrivalStation=${arrivalStation}&arrivalTime=${arrivalTime}&duration=${duration}&seatNumber=${seatNumber}`;
               window.location.href = url;
             });
         </script>
-    </div>
-</body>
-</html>
+{% endblock %}
