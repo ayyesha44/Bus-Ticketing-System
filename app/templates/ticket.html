@@ -31,7 +31,6 @@
             <div class="col-md-6">
                 <h2>Seat Information</h2>
                 <p>Selected Seat: <span id="selected-seat"></span></p>
-                <div id="seat-numbers"></div>
             </div>
         </div>
 
@@ -45,6 +44,8 @@
 
         <select id="seat-select">
         </select>
+
+        <button id="submit-button">Submit</button>
 
         <script>
             const tickets = [
@@ -111,13 +112,13 @@
               for (let i = 1; i <= 35; i++) {
                 const option = document.createElement('option');
                 option.value = i;
-                option.text = i;
+                option.text = `Seat ${i}`;
                 seatSelect.appendChild(option);
               }
             }
 
             function displaySelectedSeat(seatNumber) {
-              document.getElementById('selected-seat').innerHTML = seatNumber;
+              document.getElementById('selected-seat').innerHTML = `Seat ${seatNumber}`;
             }
 
             const ticketSelect = document.getElementById('ticket-select');
@@ -141,9 +142,20 @@
               displaySelectedSeat(seatSelect.value);
             });
 
-            displayTicketDetails(tickets[0]);
-            displaySeatOptions();
-            displaySelectedSeat(1);
+            const submitButton = document.getElementById('submit-button');
+            submitButton.addEventListener('click', () => {
+              const routeName = document.getElementById('route-name').innerHTML;
+              const trainNumber = document.getElementById('train-number').innerHTML;
+              const departureStation = document.getElementById('departure-station').innerHTML;
+              const departureTime = document.getElementById('departure-time').innerHTML;
+              const arrivalStation = document.getElementById('arrival-station').innerHTML;
+              const arrivalTime = document.getElementById('arrival-time').innerHTML;
+              const duration = document.getElementById('duration').innerHTML;
+              const seatNumber = document.getElementById('selected-seat').innerHTML;
+
+              const url = `ticket_details.html?routeName=${routeName}&trainNumber=${trainNumber}&departureStation=${departureStation}&departureTime=${departureTime}&arrivalStation=${arrivalStation}&arrivalTime=${arrivalTime}&duration=${duration}&seatNumber=${seatNumber}`;
+              window.location.href = url;
+            });
         </script>
     </div>
 </body>
