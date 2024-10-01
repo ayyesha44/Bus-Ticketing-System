@@ -153,9 +153,17 @@
       }
       .amount1{
         display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .amount2{
+        display: flex;
         justify-content: space-between;
       }
       .amount{
+        margin-left: 5px;
+      }
+      .totalamount{
         margin-left: 5px;
       }
       .total {
@@ -197,7 +205,7 @@
         justify-content: space-between;
       }
       .seat_type-item {
-        width: 100px;
+        width: 300px;
         height: 40px;
         background: rgb(233, 233, 233);
         text-align: center;
@@ -211,6 +219,11 @@
       }
       .day {
         font-size: 12px;
+      }
+      .tmp {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
       }
       /* .times {
         width: 100%;
@@ -273,8 +286,8 @@
                       <input type="checkbox" name="{{seat.id}}" id="{{seat.id}}" value="2" disabled/>
                       <label for="{{seat.id}}" class="seat booked"></label>
                     {%else%}
-                    <input type="checkbox" name="{{seat.id}}" id="{{seat.id}}" value="1"/>
-                    <label for="{{seat.id}}" class="seat"></label>
+                    <input type="checkbox" name="{{seat.id}}" id="{{seat.id}}" onclick="selectOnlyThis(this.id)" value="1"/>
+                    <label for="{{seat.id}}" class="seat" id="seat{{seat.id}}"></label>
                     {%endif%}
                   {%endfor%}
                 </div>
@@ -282,157 +295,165 @@
             </div>
             <div class="variant">
               <div class="seat_type" >
-                <input type="radio" name="date" id="d1" value="Premium" required/>
+                <input type="radio" name="date" id="d1" value="Premium" disabled/>
                 <label for="d1" class="seat_type-item">
-                  <div class="day">First Class</div>
-                  <div class="date">+RM 200</div>
-                </label>
-                <input type="radio" id="d2" name="date" value="Business" required/>
-                <label class="seat_type-item" for="d2">
-                  <div class="day">Business</div>
-                  <div class="date">+RM 100</div>
-                </label>
-                <input type="radio" id="d3" name="date" value="Economy" required/>
-                <label class="seat_type-item" for="d3">
-                  <div class="day">Economy</div>
-                  <div class="date">+RM 0</div>
+                  <div class="day">Please select your seat</div>
+                  <div class="tmp">
+                    <div class="date">Price: RM</div>
+                    <div class="subtotal" style="padding-left: 10px;">-</div>
+                  </div>
+                  
                 </label>
               </div>
             </div>
           </form>
           <div class="price">
             <div class="total">
-              <span> <span class="count" id="pls2">0</span> Tickets </span>
+              <span> <span class="count" id="pls2">0</span> Ticket </span>
               <div class="amount1">
-                <div class="RM">RM</div>
-                <div class="amount" id="pls">0</div>
-                <p id="demo"></p>
+                <div class="amount2">
+                  <div class="RM">RM</div>
+                  <div class="amount" id="pls">0</div>
+                </div>
+                <p id="demo">0</p>
               </div>
             </div>
-            <button onclick="valthisform(); valthisform2()" type="submit" form="form1" value="Submit">Add to cart</button>
+            <button onclick="add_to_cart()" type = "reset" form="form1" value="Add to cart">Add to cart</button>
+            <button onclick="valthisform()">Confirm</button>
             <button onclick="clearBox()" type="reset" form="form1" value="Reset">Reset</button>
           </div>
         </div>
       </div>
        
     </div>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
-      let seats = document.querySelector(".all-seats");
-      let tickets = seats.querySelectorAll("input");
-      ori_amount = 0;
-      tickets.forEach((ticket) => {
-        ticket.addEventListener("change", () => {
-          let amount = document.querySelector(".amount").innerHTML;
-          let count = document.querySelector(".count").innerHTML;
-          amount = Number(amount);
-          count = Number(count);
-          ori_amount = Number(ori_amount);
+      var selected = [];
 
-          if (ticket.checked) {
-            count += 1;
-            amount += 200;
-            ori_amount += 200;
-            document.getElementById('d1').checked = false;
-            document.getElementById('d2').checked = false;
-            document.getElementById('d3').checked = false;
-          } else {
-            count -= 1;
-            amount -= 200;
-            if (document.getElementById('d1').checked && amount >= ori_amount){
-              amount -=200;
-            }
-            else if (document.getElementById('d2').checked && amount >= ori_amount){
-              amount -=100;
-            }
-            ori_amount -= 200;
-          }
-          document.querySelector(".amount").innerHTML = amount;
-          document.querySelector("#demo").innerHTML = ori_amount;
-          document.querySelector(".count").innerHTML = count;
-        });
-      });
       
-
-      let st = document.querySelector(".seat_type")
-      let type = st.querySelectorAll("input")
-      type.forEach((selections) => {
-        selections.addEventListener("change", () => {
-          
-          let price_tics = document.querySelector("#demo").innerHTML;
-          let tics_count = document.querySelector(".count").innerHTML;
-          price_tics = Number(price_tics);
-          amount = 0;
-          amount = Number(amount);
-          if (document.getElementById('d1').checked){
-            amount +=price_tics;
-            amount += 200 * tics_count;
-            
-          }
-          else if (document.getElementById('d2').checked){
-            amount +=price_tics;
-            amount += 100 * tics_count;
-          }
-          else if (document.getElementById('d3').checked){
-            amount += price_tics;
-          }
-          document.querySelector(".amount").innerHTML = amount;
-        })
-      })
-      function clearBox(){
-        document.getElementById("pls").innerHTML = 0;
-        document.getElementById("demo").innerHTML = 0;
-        ori_amount = 0;
-        document.getElementById("pls2").innerHTML = 0;
-        for (let i = 0; i < 36; i++){
-          document.getElementById(i+1).disabled=false;
-        } 
-      }
-
-      document.getElementById("d1").addEventListener("checked", disable);
-      document.getElementById("d2").addEventListener("checked", disable);
-      document.getElementById("d3").addEventListener("checked", disable);
-
-    function disable() {
+      function disable() {
         for (let i = 0; i < 36; i++){
           document.getElementById(i+1).disabled=true;
         }   
       }
+      
+      function selectOnlyThis(id) {
+        clear_amount();
+        check_seat_id(id);
+        let boxes = document.querySelectorAll("input[type=checkbox]");
+        boxes.forEach(b => b.addEventListener("change", tick));
+        function tick(e) {
+          let state = e.target.checked; // save state of changed checkbox
+          boxes.forEach(b => b.checked = false); // clear all checkboxes
+          e.target.checked = state; // restore state of changed checkbox
+        }
+      }
+
+      function check_seat_id(id){
+        let check_id = document.getElementById(id).checked
+        let subtotal = document.querySelector(".subtotal").innerHTML
+        if (check_id == true){
+          if (id < 17){
+            subtotal = 200
+            document.querySelector(".subtotal").innerHTML = subtotal
+            document.querySelector(".day").innerHTML = "Economy Class: Seat " + id 
+          }
+          if (id > 16 && id < 30){
+            subtotal = 300
+            document.querySelector(".subtotal").innerHTML = subtotal
+            document.querySelector(".day").innerHTML = "Business Class: Seat " + id 
+          }
+          if (id > 29 && id < 36){
+            subtotal = 400
+            document.querySelector(".subtotal").innerHTML = subtotal
+            document.querySelector(".day").innerHTML = "First Class: Seat " + id 
+          }
+        }
+      }
+
+      function clear_amount(){
+        document.querySelector(".subtotal").innerHTML = "-"
+        document.querySelector(".day").innerHTML = "Please select your seat"
+      }
+      
+
+
+
+
+      function add_to_cart(){
+        // var cb = document.querySelector(".all-seats")
+        // var checkboxs=cb.querySelectorAll("input[type=checkbox]");
+        for(var i=1;i<36;i++)
+        {
+            if(document.getElementById(String(i)).checked === true)
+            {
+                document.getElementById("seat"+i).className = "seat booked"
+                selected.push(i)
+                document.getElementById(String(i)).disabled = true;
+                break;
+              }
+            }
+            
+            let price = document.querySelector(".subtotal").innerHTML;
+            let total = document.querySelector(".amount").innerHTML;
+            let count = document.querySelector(".count").innerHTML;
+            count = Number(count)
+            price = Number(price)
+            total = Number(total)
+            total += price
+            count += 1
+            document.querySelector(".amount").innerHTML = total
+            document.querySelector(".count").innerHTML = count
+            clear_amount()
+          }
+          
+       
+          
+          
+          
+          
+      function clearBox(){
+        
+        document.getElementById("pls").innerHTML = 0;
+        document.getElementById("demo").innerHTML = 0;
+        ori_amount = 0;
+        document.getElementById("pls2").innerHTML = 0;
+        clear_amount()
+        for (x of selected){
+          document.getElementById("seat"+x).className = "seat"
+        }
+        for (let i = 1; i < 36; i++){
+          document.getElementById(i).disabled=false;
+        }
+        selected = [];
+        document.getElementById("demo").innerHTML = selected
+      }
+      
+
     function valthisform()
     {
-        var cb = document.querySelector(".all-seats")
-        var checkboxs=cb.querySelectorAll("input");
-        var okay=false;
-        for(var i=0,l=checkboxs.length;i<l;i++)
-        {
-            if(checkboxs[i].checked)
-            {
-                okay=true;
-                break;
-            }
-        }
-        if(okay){
-          pass
-        }
-        else {
-          alert("Please select at least 1 seat");
-          event.preventDefault();
-        
-        
-   }
-  }
-   function valthisform2()
-   {
-    var rd = document.querySelector(".seat_type")
-    var radios = rd.querySelectorAll("input");
-
-    for (var i = 0, len = radios.length; i < len; i++) {
-          if (radios[i].checked) {
-              return true;
+      event.preventDefault(); 
+      var okay=true;
+      
+      if(okay){
+        value = JSON.stringify(selected)
+        // console.log(value)
+        $.ajax({
+          url:"/seats",
+          type: "POST",
+          contentType:"application/json",
+          data: JSON.stringify(value),
+          success: function () {
+            window.location.href = "/checkout";
           }
+
+        });
+      }
+      else {
+        alert("Please select at least 1 seat");
+        event.preventDefault();  
+      }
     }
-    alert("Please pick your seat type")
-    return false;
-   }
     </script>
   </body>
 </html>

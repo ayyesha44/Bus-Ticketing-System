@@ -2,11 +2,13 @@ import sqlalchemy
 from app.models import User
 from app import app, db
 from app.forms import Loginform, Signupform, Editprofileform
-from flask import render_template, redirect, flash, request, url_for
+from flask import render_template, redirect, flash, request, url_for, jsonify
 from flask_login import current_user, login_user, login_required, logout_user
 from app.models import User, Seat, Tickets
-
+import json
 import numbers
+
+
 
 
 @app.route('/')
@@ -58,34 +60,33 @@ def select_seat():
     user = []
     i = 0
     seat_num = []
+    global total_amount
     total_amount = 0
     if request.method =="POST":
-        for x in range(1,36):
-            tmp = request.form.get(str(x))
-            if tmp == "1":
-                i += 1
-                seat_update = Seat.query.filter_by(id=str(x)).update(dict(selected=True))
-                seat_num.append(i)
-            elif tmp is None:
-                i += 1
-                tmp = "0"
-            user += tmp
-        st = request.form.get("date")
-        for id in seat_num:
-            total_amount += 200
-            if st == "Premium":
+        output = request.get_json()
+        output = json.loads(output)
+        app.logger.error(output)
+        for x in output:
+            seat_update = Seat.query.filter_by(id=str(x)).update(dict(selected=True))
+            if (x < 17):
+                st = "Economy"
                 total_amount += 200
-            elif st == "Business":
-                total_amount += 100
-            elif st == "Economy":
-                total_amount += 0
-            new_tickets = Tickets(user_id = current_user.id, seat_id = id, seat_type = st)
-            db.session.add(new_tickets)
-            db.session.commit()
-        # curr = db.session.execute(db.select(Tickets).filter_by(user_id=current_user.id)).scalars()
-        curr = db.session.query(Tickets).filter_by(user_id=current_user.id).all()
+                new_tickets = Tickets(user_id = current_user.id, seat_id = str(x), seat_type = st)
+                db.session.add(new_tickets)
+                db.session.commit()
+            elif (x > 16 and x < 30):
+                st = "Business"
+                total_amount += 300
+                new_tickets = Tickets(user_id = current_user.id, seat_id = str(x), seat_type = st)
+                db.session.add(new_tickets)
+                db.session.commit()
+            elif (x > 29 and x < 36):
+                st = "First Class"
+                total_amount += 400
+                new_tickets = Tickets(user_id = current_user.id, seat_id = str(x), seat_type = st)
+                db.session.add(new_tickets)
+                db.session.commit()
 
-        # app.logger.error(curr)
         return redirect(url_for("checkout", total=total_amount))
     else:
         return render_template("select_seat.html", seat=seat)
@@ -94,15 +95,17 @@ def select_seat():
 def user(usr):
     return f"<h1>{usr}</h1>"
 
-@app.route("/checkout/<total>", methods=["GET", "POST"])
-def checkout(total):
+@app.route("/checkout", methods=["GET", "POST"])
+def checkout():
+
+    # total = 0
     curr = db.session.query(Tickets).filter_by(user_id=current_user.id).all()
     if request.method =="POST":
         successful = Tickets.query.filter_by(user_id=current_user.id).delete()
         db.session.commit()
         flash("Payment is successful. Redirecting to the home page...")
         return redirect("/index")
-    return render_template("checkout.html", curr=curr, total=total)
+    return render_template("checkout.html", curr=curr, total=total_amount)
 
 @app.route('/booking')
 @login_required
